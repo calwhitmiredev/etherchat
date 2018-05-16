@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Etherchat: Post A Message</title>
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+
+        <button onclick="IndexButton()" style="background: url(images/viewmessages.png); background-repeat:no-repeat;"></button>
+
+        <h1>Post a Message</h1>
+        
+        <label for="mes" class="col-lg-2 control-label">Message</label>
+        <input id="MessageBox" type="text" maxlength="100">
+
+        <label for="name" class="col-lg-2 control-label">Name</label>
+        <input id="name" type="text" maxlength="100">
+        
+        <button id="cost" onclick="CostBTN()" style="background: url(images/cost.png); background-repeat:no-repeat;"> </button>
+        <button id="button" onclick="setMessage()" style="background: url(images/submit.png); background-repeat:no-repeat;" > </button>
+
+        <label for="add" class="col-lg-2 control-label">Address</label>
+        <input id="add">
+
+        <label for="pass" class="col-lg-2 control-label">Password</label>
+        <input id="pass">
+
+        <!-- <p id="status"></p>
+        <button id="unlock" onclick="ButtonPress()" style="background: url(images/unlock.png);background-repeat:no-repeat;" ></button> -->
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <script type='text/javascript'>
+
+        var Web3 = require('web3'); 
+        var web3 = new Web3();
+        web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545'));
+        var address = new String();
+
+        var EthProjContract = web3.eth.contract([ { "constant": true, "inputs": [], "name": "getName", "outputs": [ { "name": "", "type": "string", "value": "" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_fName", "type": "string" }, { "name": "_age", "type": "string" } ], "name": "setMessage", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "getMessage", "outputs": [ { "name": "", "type": "string", "value": "" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "name", "type": "string" }, { "indexed": false, "name": "age", "type": "string" } ], "name": "Message", "type": "event" } ]);
+        var EthProj = EthProjContract.at('0xddAfc612f96EcF46DEA7ff80fdb7ec0f97547f23');
+        console.log(EthProjContract);
+
+        var intervalID = window.setInterval(update, 10000);
+
+        function update() {
+            if((web3.eth.accounts[0] != undefined) && (address != '')) {
+                $("#status").html("Does Not Needs Unlocking");
+            } else {
+                $("#status").html("Needs Unlocking");
+            }
+
+            const btn = document.querySelector('button');
+        }
+
+        function CostBTN() {
+            const output = document.getElementById("mesText");
+            const messageBox = document.getElementById("MessageBox");
+            const name = document.getElementById("name");
+
+            output.innerHTML = ("Message (" + "Estimated cost: " + ((375 + messageBox.value.length * 8 + name.value.length * 8)) + " Gas)");
+        }
+
+        update();
+        
+        function ButtonPress() {
+            web3.eth.defaultAccount = $("#add").val();
+            address = $("#add").val();
+            web3.personal.unlockAccount(address, $("#pass").val(), 100);
+            console.log(address);
+            console.log($("#pass").val());
+        }
+
+        function IndexButton() {
+            window.location.href = "file:///D:/Desktop/ethproj/index.html";
+        }
+
+        function setMessage() {
+            if(($("#MessageBox").val() === '""') || ($("#name").val() === '""')) {
+                ButtonPress();
+                EthProj.setMessage.sendTransaction($("#MessageBox").val(), $("#name").val(), {from: $("#add").val()});
+            } else {
+                window.alert("You must have the name and message selected!");
+            }
+        }
+    </script>
+
+</body>
+</html>
