@@ -1,20 +1,20 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.4.18;
 
 contract EthProj {
     
     string fMessage;
     
-    event Message(address add, string message, uint cost);
-    event Username(address add, string name, uint cost);
+    event Message(string message, address add, uint cost);
+    event Username(string name, address add, uint cost);
    
     function setMessage(string _fMessage) public {
         fMessage = _fMessage;
         
-        emit Message(msg.sender, _fMessage, tx.gasprice);
+        emit Message(_fMessage, msg.sender, tx.gasUsed);
     }
     
     function setUsername(string _userName) public {
-        emit Username(msg.sender, _userName, tx.gasprice);
+        emit Username(_userName, msg.sender, tx.gasUsed);
     }
    
 }
