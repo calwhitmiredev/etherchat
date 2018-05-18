@@ -1,19 +1,19 @@
 # etherchat
-A social media network based around the ethereum block-chain built off of solidity, java-script, and HTML.
+A social media network based around the ethereum block-chain built off of solidity, java-script, and HTML. <br />
 
-It works by calling events to the ethereum blockchain, then by looking back throughout the blockchain to find the logs of the events.
+It works by calling events to the ethereum blockchain, then by looking back throughout the blockchain to find the logs of the events. <br />
 
-Features: 
-  Currently etherchat contains two events in the EthProj.sol contract.
-    Event 1: Message:
-      The message event contains three variables:
-        1: Message text
-        2: Sender
-        3: Amount of gas
-      The Message event is implemented in the interface improperly: update to the JS scripts is required.
-    Event 2: Username
-      The username event contains three variables:
-        1: Username
-        2: Sender
-        3: Amount of gas
-       The Username event is not implemented in the interface: update to the JS scripts is required.
+Features:  <br />
+  Currently etherchat contains two events in the EthProj.sol contract. <br />
+    Event 1: Message: <br />
+      The message event contains three variables: <br />
+        1: Message text <br />
+        2: Sender <br />
+        3: Amount of gas <br />
+      The Message event is implemented in the interface improperly: update to the JS scripts is required. <br />
+    Event 2: Username <br />
+      The username event contains three variables: <br />
+        1: Username <br />
+        2: Sender <br />
+        3: Amount of gas <br />
+       The Username event is not implemented in the interface: update to the JS scripts is required. <br />
