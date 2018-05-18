@@ -98,13 +98,8 @@ input {
     animation: fadeIn 1s
 }
 
-/* Add animation (fade in the popup) */
-@-webkit-keyframes fadeIn {
-    from {opacity: 0;} 
-    to {opacity: 1;}
-}
-
-@keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity:1 ;}
+h2 {
+  border:    1px solid green;
+  /*width:     500px;*/
+  word-wrap: break-word;
 }
