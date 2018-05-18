@@ -2,23 +2,19 @@ pragma solidity ^0.4.18;
 
 contract EthProj {
     
-    string fName;
-    string age;
+    string fMessage;
     
-    event Message(string name, string age);
+    event Message(address add, string message);
+    event Username(address add, string name);
    
-    function setMessage(string _fName, string _age) public {
-        fName = _fName;
-        age = _age;
+    function setMessage(string _fMessage) public {
+        fMessage = _fMessage;
         
-        emit Message(_fName, _age);
+        emit Message(msg.sender, _fMessage);
+    }
+    
+    function setUsername(string _userName) public {
+        emit Username(msg.sender, _userName);
     }
    
-    function getName() public constant returns (string) {
-        return (fName);
-    }
-   
-    function getMessage() public constant returns (string) {
-        return (age);
-    }
 }
