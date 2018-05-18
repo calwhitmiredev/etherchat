@@ -10,11 +10,11 @@ contract EthProj {
     function setMessage(string _fMessage) public {
         fMessage = _fMessage;
         
-        emit Message(msg.sender, _fMessage, msg.value);
+        emit Message(msg.sender, _fMessage, tx.gasprice);
     }
     
     function setUsername(string _userName) public {
-        emit Username(msg.sender, _userName, msg.value);
+        emit Username(msg.sender, _userName, tx.gasprice);
     }
    
 }
