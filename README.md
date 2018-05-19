@@ -10,10 +10,10 @@ Features:  <br />
         - 1: Message text <br />
         - 2: Sender <br />
         - 3: Amount of gas <br />
-      - The Message event is implemented in the interface improperly: update to the JS scripts is required. <br />
+      - The Message event is not fully implimented in the interface: still WIP. <br />
     - Event 2: Username <br />
       - The username event contains three variables: <br />
         - 1: Username <br />
         - 2: Sender <br />
         - 3: Amount of gas <br />
-       - The Username event is not implemented in the interface: update to the JS scripts is required. <br />
+       - The Username event is not fully implimented in the interface: still WIP. <br />
