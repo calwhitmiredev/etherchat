@@ -49,7 +49,7 @@
         var address = new String();
 
         var EthProjContract = web3.eth.contract([ { "constant": false, "inputs": [ { "name": "_fMessage", "type": "string" } ], "name": "setMessage", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "_userName", "type": "string" } ], "name": "setUsername", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "message", "type": "string" }, { "indexed": false, "name": "add", "type": "address" }, { "indexed": false, "name": "cost", "type": "uint256" } ], "name": "Message", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "name", "type": "string" }, { "indexed": false, "name": "add", "type": "address" }, { "indexed": false, "name": "cost", "type": "uint256" } ], "name": "Username", "type": "event" } ]);
-        var EthProj = EthProjContract.at('0xa8FA5A26569253B7472EC526D159681889B454c9');
+        var EthProj = EthProjContract.at('0xF5784E6a4B766cF9f080a9Eb7f9F883Fc57810b3');
         console.log(EthProjContract);
 
         var intervalID = window.setInterval(update, 10000);
@@ -83,7 +83,7 @@
         }
 
         function IndexButton() {
-            window.location.href = "file:///D:/Desktop/ethproj/index.html";
+            window.location.href = "file:///D:/etherchat/html/index.html";
         }
 
         function setMessage() {
