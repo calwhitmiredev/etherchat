@@ -8,8 +8,6 @@
 
     <link rel="stylesheet" type="text/css" href="main.css">
 
-    <script src="./node_modules/web3/dist/web3.min.js"></script>
-
 </head>
 <body>
     <div class="container">
@@ -40,6 +38,8 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+    <script async type="text/javascript" src="shoco/shoco.js"></script>
 
     <script type='text/javascript'>
 
@@ -48,19 +48,13 @@
         web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545'));
         var address = new String();
 
-        var EthProjContract = web3.eth.contract([ { "constant": false, "inputs": [ { "name": "_fMessage", "type": "string" } ], "name": "setMessage", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "_userName", "type": "string" } ], "name": "setUsername", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "message", "type": "string" }, { "indexed": false, "name": "add", "type": "address" }, { "indexed": false, "name": "cost", "type": "uint256" } ], "name": "Message", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "name", "type": "string" }, { "indexed": false, "name": "add", "type": "address" }, { "indexed": false, "name": "cost", "type": "uint256" } ], "name": "Username", "type": "event" } ]);
-        var EthProj = EthProjContract.at('0xF5784E6a4B766cF9f080a9Eb7f9F883Fc57810b3');
+        var EthProjContract = web3.eth.contract([ { "constant": false, "inputs": [ { "name": "_userName", "type": "uint8[]" } ], "name": "setUsername", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "_fMessage", "type": "uint8[]" } ], "name": "setMessage", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "message", "type": "uint8[]" }, { "indexed": false, "name": "add", "type": "address" }, { "indexed": false, "name": "cost", "type": "uint256" } ], "name": "Message", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "name", "type": "uint8[]" }, { "indexed": false, "name": "add", "type": "address" }, { "indexed": false, "name": "cost", "type": "uint256" } ], "name": "Username", "type": "event" } ]);
+        var EthProj = EthProjContract.at('0xF1BA0Cd57F3A831E018201fb2B74D7E56D39D50b');
         console.log(EthProjContract);
 
         var intervalID = window.setInterval(update, 10000);
 
         function update() {
-            if((web3.eth.accounts[0] != undefined) && (address != '')) {
-                $("#status").html("Does Not Needs Unlocking");
-            } else {
-                $("#status").html("Needs Unlocking");
-            }
-
             const btn = document.querySelector('button');
         }
 
@@ -71,15 +65,13 @@
 
             output.innerHTML = ("Message (" + "Estimated cost: " + ((375 + messageBox.value.length * 8 + name.value.length * 8)) + " Gas)");
         }
-
-        update();
         
         function ButtonPress() {
-            web3.eth.defaultAccount = $("#add").val();
-            address = $("#add").val();
+            web3.eth.defaultAccount = document.getElementById("add").value;
+            var address = document.getElementById("add").value; 
             console.log(address);
-            console.log($("#pass").val());
-            web3.personal.unlockAccount(address, $("#pass").val(), 100);
+            var pass = document.getElementById("pass").value;
+            web3.personal.unlockAccount(address, pass, 100);
         }
 
         function IndexButton() {
@@ -89,7 +81,9 @@
         function setMessage() {
             /*if(($("#MessageBox").val() === '""') || ($("#name").val() === '""')) {*/
             ButtonPress();
-            EthProj.setMessage.sendTransaction($("#MessageBox").val(), {from: $("#add").val()});
+            message = document.getElementById("MessageBox").value;
+            compressed = shoco.compress(message);
+            EthProj.setMessage.sendTransaction(compressed, document.getElementById("MessageBox").value, {from: document.getElementById("add").value});
             /*} else {
                 window.alert("You must have the name and message selected!");
             }*/

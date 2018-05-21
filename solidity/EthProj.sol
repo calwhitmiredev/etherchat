@@ -2,18 +2,17 @@ pragma solidity ^0.4.18;
 
 contract EthProj {
     
-    string fMessage;
+    event Message(uint8[] message, address add, uint256 cost);
+    event Username(uint8[] name, address add, uint256 cost);
+
+    uint8[] fMessage;
     
-    event Message(string message, address add, uint256 cost);
-    event Username(string name, address add, uint256 cost);
-   
-    function setMessage(string _fMessage) public {
-        fMessage = _fMessage;
-        
+    function setMessage(uint8[] _fMessage) public{
+        fMessage= _fMessage;
         emit Message(_fMessage, msg.sender, gasleft());
     }
     
-    function setUsername(string _userName) public {
+    function setUsername(uint8[] _userName) public {
         emit Username(_userName, msg.sender, gasleft());
     }
    

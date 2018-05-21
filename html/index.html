@@ -7,9 +7,6 @@
     <title>Etherchat!</title>
 
     <link rel="stylesheet" type="text/css" href="main.css">
-
-    <script src="./node_modules/web3/dist/web3.min.js"></script>
-
 </head>
 <body>
     <button onclick="PostButton()" style="background: url(images/viewpost.png); background-repeat:no-repeat;"> </button>
@@ -18,7 +15,10 @@
         
     <hr>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> 
+    <script async type="text/javascript" src="shoco/shoco.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+    <script src="FastInt/FastIntegerCompression.js"></script>
 
     <script>
 
@@ -26,9 +26,10 @@
         var web3 = new Web3();
         web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545'));
         var address = new String();
+        var FastIntegerCompression = require("fastintcompression");
 
-        var EthProjContract = web3.eth.contract([ { "constant": false, "inputs": [ { "name": "_fMessage", "type": "string" } ], "name": "setMessage", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "_userName", "type": "string" } ], "name": "setUsername", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "message", "type": "string" }, { "indexed": false, "name": "add", "type": "address" }, { "indexed": false, "name": "cost", "type": "uint256" } ], "name": "Message", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "name", "type": "string" }, { "indexed": false, "name": "add", "type": "address" }, { "indexed": false, "name": "cost", "type": "uint256" } ], "name": "Username", "type": "event" } ]);
-        var EthProj = EthProjContract.at('0xF5784E6a4B766cF9f080a9Eb7f9F883Fc57810b3');
+        var EthProjContract = web3.eth.contract([ { "constant": false, "inputs": [ { "name": "_userName", "type": "uint8[]" } ], "name": "setUsername", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "_fMessage", "type": "uint8[]" } ], "name": "setMessage", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "message", "type": "uint8[]" }, { "indexed": false, "name": "add", "type": "address" }, { "indexed": false, "name": "cost", "type": "uint256" } ], "name": "Message", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "name", "type": "uint8[]" }, { "indexed": false, "name": "add", "type": "address" }, { "indexed": false, "name": "cost", "type": "uint256" } ], "name": "Username", "type": "event" } ]);
+        var EthProj = EthProjContract.at('0xF1BA0Cd57F3A831E018201fb2B74D7E56D39D50b');
         console.log(EthProjContract);
 
         var intervalID = window.setInterval(update, 10000);
@@ -51,6 +52,7 @@
                 i++;
                 messages = "";
                 messages = JSON.stringify(results.args);
+                console.log(messages);
 
                 if(i === messageToGet) { 
                     var Username = EthProj.Username({}, { fromBlock: 0, toBlock: 'latest'});
@@ -59,6 +61,7 @@
                             name = JSON.stringify(reuslts.args);
                             if(name.split(",")[1].split(":")[1] === messages.split(":")[2].split(",")[0].split("}")[0]) {
                                 senderName = name.split(",")[0].split(":")[1];
+                                console.log(senderName);
                             } else {
                                 senderName = "No Name";
                             }
@@ -67,6 +70,7 @@
 
                     if(messages.split(":")[1].split(",")[0] != '""') {
                         tempString = ((messages.split(":")[1].split(",")[0] + " (From: " + senderName + ")").replace(/"/g, ''));
+                        console.log(tempString);
                     } else {
                         tempString = (("(no included text) " + " (From: " + senderName + ")").replace(/"/g, ''));
                     }
@@ -84,9 +88,11 @@
                     if(document.getElementById("Message" + placeToSet) === null) {
                         var newh2 = document.createElement('h2');
                         newh2.setAttribute("id", ("Message" + placeToSet));
-                        var text = document.createTextNode(tempString);
+                        var text = document.createTextNode(shoco.decompress(tempString));
                         newh2.appendChild(text);
                         document.body.appendChild(newh2);
+
+                        console.log(text);
 
                         var newHR = document.createElement('hr');
                         newHR.setAttribute("id", ("hr" + placeToSet));
@@ -95,13 +101,7 @@
             });
         }
 
-        function update() {
-            if((web3.eth.accounts[0] != undefined) && (address != '')) {
-                $("#status").html("Does Not Needs Unlocking");
-            } else {
-                $("#status").html("Needs Unlocking");
-            }
-
+        function update(){
             tempString = "";
             //console.clear();
             for(var i = 0; i < 10; i++) {
