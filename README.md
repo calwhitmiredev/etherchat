@@ -17,3 +17,6 @@ Features:  <br />
         - 2: Sender <br />
         - 3: Amount of gas <br />
        - The Username event is not fully implimented in the interface: still WIP. <br />
+       
+       
+Supporters: calwhitmiredev (devlopment)
