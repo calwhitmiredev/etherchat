@@ -3,10 +3,10 @@ A social media network based around the ethereum block-chain built off of solidi
 
 It works by calling events to the ethereum blockchain, then by looking back throughout the blockchain to find the logs of the events. <br /><hr>
 
-Features:  <br /><hr>
+<hr>Features:  <br /><
   - Currently etherchat contains two events in the EthProj.sol contract. <br />
     - Event 1: Message: <br />
-      - The message event contains three variables: <br /><hr>
+      - The message event contains three variables: <br />
         - 1: Message text <br />
         - 2: Sender <br />
         - 3: Amount of gas <br />
