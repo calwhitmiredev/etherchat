@@ -10,7 +10,7 @@ Features:  <br />
         - 1: Message text <br />
         - 2: Sender <br />
         - 3: Amount of gas <br />
-      - The Message event is not fully implimented in the interface: still WIP. <br />
+      - The Message event is broken do to the not functional compression feature. <br />
     - Event 2: Username <br />
       - The username event contains three variables: <br />
         - 1: Username <br />
